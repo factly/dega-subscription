@@ -1,0 +1,45 @@
+{
+    
+    "databaseConfig": {
+        "uri": "mongodb://localhost:27017/",
+        "databases": {
+            "factly": "Factly"
+        }
+    },
+    "middleware": {
+
+        "devtools": {
+            "enabled": true,
+            "priority": 35,
+            "module": {
+                "name": "construx",
+                "arguments": [
+                    "path:./public",
+                    "path:./.build",
+                    {
+                        
+                        
+                        "copier": {
+                            "module": "construx-copier",
+                            "files": "**/*"
+                        }
+                    }
+                ]
+            }
+        },
+        "appsec": {
+            "priority": 110,
+            "module": {
+                "name": "lusca",
+                "arguments": [
+                    {
+                        "csrf": false,
+                        "xframe": "SAMEORIGIN",
+                        "p3p": false,
+                        "csp": false
+                    }
+                ]
+            }
+        }
+    }
+}
