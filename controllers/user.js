@@ -22,15 +22,15 @@ function getUserInfo(req, res, next) {
   const logger = req.logger;
   const model = new UserModel();
   console.log("controller passing")
-  req.headers.host = 'localhost:8080'
+  req.headers.host = req.app.kraken.get('env:keycloak:uri')
   console.log(req.headers.host)
   var options = {
     // host to forward to
-    host: 'localhost',
+    host:req.app.kraken.get('env:keycloak:uri'),
     // port to forward to
-    port: 8080,
+    port: null,
     // path to forward to
-    path: '/auth/realms/Factly/protocol/openid-connect/userinfo',
+    path: '/auth/realms/Test/protocol/openid-connect/userinfo',
     // request method
     method: 'GET',
     // headers to send
@@ -44,6 +44,7 @@ function getUserInfo(req, res, next) {
 
     // wait for data
     cres.on('data', async function (chunk) {
+      console.log("chunk",chunk)
       chunk = JSON.parse(chunk)
       if (chunk["error"]) {
         console.log("error", chunk["error"]);

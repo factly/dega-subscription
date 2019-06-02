@@ -23,9 +23,9 @@ class SavedModel extends MongoBase {
                     console.log("getLiked",result[0].post);
                     return Q(axios({
                       method:'get',
-                      url:"http://api.factly.in/api/v1/posts/",
+                      url:config.get('env:dega-api:baseUri')+config.get('env:dega-api:posts'),
                       params:{
-                        "client":"factly-telugu",
+                        "client":config.get('env:dega-api:client'),
                         "ids":result[0].post,
                         "sortBy":"publishedDate",
                         "sortAsc":"false"
@@ -55,9 +55,9 @@ class SavedModel extends MongoBase {
                     console.log("getLiked",result[0].factcheck);
                     return Q(axios({
                       method:'get',
-                      url:"http://api.factly.in/api/v1/factchecks/",
+                      url:config.get('env:dega-api:baseUri')+config.get('env:dega-api:factchecks'),
                       params:{
-                        "client":"factly-telugu",
+                        "client":config.get('env:dega-api:client'),
                         "ids":result[0].factcheck,
                         "sortBy":"publishedDate",
                         "sortAsc":"false"

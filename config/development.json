@@ -1,13 +1,25 @@
 {
-    
     "databaseConfig": {
-        "uri": "mongodb://localhost:27017/",
+        "uri": "mongodb://192.168.43.173:27017/",
         "databases": {
             "factly": "Factly"
         }
     },
+    "env":{
+        "keycloak":{
+            "uri":"login.nirneta.com",
+            "validateTokenEndpoint":"http://login.nirneta.com/auth/realms/Test/protocol/openid-connect/token/introspect",
+            "clientId":"dega-user-api",
+            "secret":"db42946e-b8b7-4ac5-a146-61a67c41696c"
+        },
+        "dega-api":{
+            "baseUri":"http://api.factly.in/api/v1/",
+            "posts":"posts/",
+            "factchecks":"factchecks/",
+            "client":"factly-telugu"
+        }
+    },
     "middleware": {
-
         "devtools": {
             "enabled": true,
             "priority": 35,
@@ -17,8 +29,6 @@
                     "path:./public",
                     "path:./.build",
                     {
-                        
-                        
                         "copier": {
                             "module": "construx-copier",
                             "files": "**/*"
@@ -39,6 +49,13 @@
                         "csp": false
                     }
                 ]
+            }
+        },
+        "validateToken": {
+            "enabled": true,
+            "priority": 119, 
+            "module": {
+                "name": "path:./lib/validateToken.js"
             }
         }
     }

@@ -15,11 +15,11 @@ class StoryModel extends MongoBase {
     saveStory(config, accessToken, user, id, type) {
         const database = config.get('databaseConfig:databases:factly');
         console.log("database", database);
-        return Q(this.collection(database, "users").find({ _id: user.id }).toArray()
+        return Q(this.collection(database, "users").find({ _id: user.sub }).toArray()
             .then((result) => {
                 let userPrefs;
                 let toModify = true;
-                console.log("id", id, "userid", user.id, "result", result);
+                console.log("id", id, "userid", user.sub, "result", result);
                 if (result.length > 0) {
                     userPrefs = result[0];
                     if (userPrefs[type]) {
@@ -34,12 +34,12 @@ class StoryModel extends MongoBase {
                     }
                 }
                 else {
-                    userPrefs = { "_id": user.id, [type]: [id] }
+                    userPrefs = { "_id": user.sub, [type]: [id] }
                 }
                 console.log("modify", toModify);
                 if (toModify) {
                     console.log("to modify", userPrefs);
-                    this.collection(database, "users").updateOne({ _id: user.id }, { $set: { [type]: userPrefs[type] } }, { upsert: true }, (err, result) => {
+                    this.collection(database, "users").updateOne({ _id: user.sub }, { $set: { [type]: userPrefs[type] } }, { upsert: true }, (err, result) => {
                         if (err) throw err;
                         return { "success": true }
                     });
@@ -51,11 +51,11 @@ class StoryModel extends MongoBase {
     unsaveStory(config, accessToken, user, id, type) {
         const database = config.get('databaseConfig:databases:factly');
         console.log("database", database);
-        return Q(this.collection(database, "users").find({ _id: user.id }).toArray()
+        return Q(this.collection(database, "users").find({ _id: user.sub }).toArray()
             .then((result) => {
                 let userPrefs;
                 let toModify = true;
-                console.log("id", id, "userid", user.id, "result", result);
+                console.log("id", id, "userid", user.sub, "result", result);
                 if (result.length > 0 && result[0][type].includes(id)) {
                     userPrefs = result[0];
                     console.log(userPrefs);
@@ -68,7 +68,7 @@ class StoryModel extends MongoBase {
                 console.log("modify", toModify);
                 if (toModify) {
                     console.log("to modify", userPrefs);
-                    this.collection(database, "users").updateOne({ _id: user.id }, { $set: { [type]: userPrefs[type] } }, { upsert: true }, (err, result) => {
+                    this.collection(database, "users").updateOne({ _id: user.sub }, { $set: { [type]: userPrefs[type] } }, { upsert: true }, (err, result) => {
                         if (err) throw err;
                         return { "success": true }
                     });

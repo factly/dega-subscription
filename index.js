@@ -1,5 +1,3 @@
-'use strict';
-
 var express = require('express');
 var kraken = require('kraken-js');
 var db = require('./lib/database.js');
