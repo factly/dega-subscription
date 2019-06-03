@@ -70,21 +70,7 @@ function getUserInfo(req, res, next) {
           .catch(next);
       }
     });
-
-    // cres.on('close', function(){
-    //   // closed, let's end client request as well
-    //   res.writeHead(cres.statusCode);
-    //   res.end();
-    // });
-    //
-    // cres.on('end', function(){
-    //   // finished, let's finish client request as well
-    //   //res.writeHead(cres.statusCode);
-    //   res.end();
-    // });
-
   }).on('error', function (e) {
-    // we got an error, return 500 error to client and log error
     console.log(e.message);
     res.writeHead(500);
     res.end();
