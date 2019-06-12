@@ -1,7 +1,7 @@
 'use strict';
 
 var UserModel = require('../models/user');
-var http = require('http');
+var http = require('https');
 function modifyUserInfo(req, res, next) {
   const logger = req.logger;
   const model = new UserModel();
@@ -21,9 +21,7 @@ function modifyUserInfo(req, res, next) {
 function getUserInfo(req, res, next) {
   const logger = req.logger;
   const model = new UserModel();
-  console.log("controller passing")
   req.headers.host = req.app.kraken.get('env:keycloak:uri')
-  console.log(req.headers.host)
   var options = {
     // host to forward to
     host:req.app.kraken.get('env:keycloak:uri'),
