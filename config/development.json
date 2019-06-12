@@ -7,10 +7,10 @@
     },
     "env":{
         "keycloak":{
-            "uri":"login.nirneta.com",
-            "validateTokenEndpoint":"http://login.nirneta.com/auth/realms/Test/protocol/openid-connect/token/introspect",
+            "uri":"login.factly.in",
+            "validateTokenEndpoint":"https://login.factly.in/auth/realms/Test/protocol/openid-connect/token/introspect",
             "clientId":"dega-user-api",
-            "secret":"db42946e-b8b7-4ac5-a146-61a67c41696c"
+            "secret":"60026f6c-6ca7-4649-953b-c75d7f298bc9"
         },
         "dega-api":{
             "baseUri":"http://api.factly.in/api/v1/",
