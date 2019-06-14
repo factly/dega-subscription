@@ -29,6 +29,8 @@ class UserModel extends MongoBase {
                         user.gender = result[0].gender
                     if (result[0].dob)
                         user.dob = result[0].dob
+                    if(result[0].name)
+                        user.name = result[0].name
                     console.log("user", user)
                 }
                 return user
@@ -38,7 +40,7 @@ class UserModel extends MongoBase {
 
     modifyUserInfo(config, accessToken, user) {
         const database = config.get('databaseConfig:databases:factly');
-        console.log(user)
+        console.log("mdify incomming",user)
         let toModify = {};
         if (user.gender) {
             toModify["gender"] = user.gender;
@@ -46,6 +48,13 @@ class UserModel extends MongoBase {
         if (user.dob) {
             toModify["dob"] = user.dob
         }
+        if(user.gender == ''){
+            toModify["gender"] = null;
+        }
+        if(user.dob == ''){
+            toModify["dob"] = null;
+        }
+        toModify["name"] = user.name
         return Q(this.collection(database, "users").updateOne({ _id: user.sub }, { $set: toModify }, { upsert: true })
             .then((result) => {
                 if (result)

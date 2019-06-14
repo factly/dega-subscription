@@ -1,7 +1,7 @@
 'use strict';
 
-const SavedModel = require('../models/saved');
-const utils = require('../lib/utils');
+const SavedModel = require('../../../models/saved');
+const utils = require('../../../lib/utils');
 
 function getSavedPosts(req,res,next){
     const logger = req.logger;

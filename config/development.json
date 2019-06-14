@@ -1,6 +1,6 @@
 {
     "databaseConfig": {
-        "uri": "mongodb://192.168.43.173:27017/",
+        "uri": "mongodb://mongodb:27017/",
         "databases": {
             "factly": "Factly"
         }

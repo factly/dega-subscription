@@ -1,7 +1,7 @@
 'use strict';
 
-const StoryModel = require('../models/story');
-const utils = require('../lib/utils');
+const StoryModel = require('../../../models/story');
+const utils = require('../../../lib/utils');
 
 function saveStory(req,res,next){
     const logger = req.logger;

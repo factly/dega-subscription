@@ -1,6 +1,6 @@
 'use strict';
 
-var UserModel = require('../models/user');
+var UserModel = require('../../../models/user');
 var http = require('https');
 function modifyUserInfo(req, res, next) {
   const logger = req.logger;
