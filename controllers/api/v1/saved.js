@@ -5,14 +5,13 @@ const utils = require('../../../lib/utils');
 
 function getSavedPosts(req,res,next){
     const logger = req.logger;
-    const model = new SavedModel();
-    console.log("controller passing")
+    utils.setLogTokens(logger, 'saved', 'getSavedPosts', req.query.client, null);
+    const model = new SavedModel(logger);
     return model.getSavedPosts(
         req.app.kraken,
         req.body.accessToken,
         req.body.user,
     ) .then((result) => {
-        console.log("controller gets",result);
         if (result) {
             res.status(200).json(result);
             return
@@ -23,14 +22,13 @@ function getSavedPosts(req,res,next){
 }
 function getSavedFactchecks(req,res,next){
     const logger = req.logger;
-    const model = new SavedModel();
-    console.log("controller passing")
+    utils.setLogTokens(logger, 'saved', 'getSavedFactchecks', req.query.client, null);
+    const model = new SavedModel(logger);
     return model.getSavedFactchecks(
         req.app.kraken,
         req.body.accessToken,
         req.body.user,
     ) .then((result) => {
-        console.log("controller gets",result);
         if (result) {
             res.status(200).json(result);
             return

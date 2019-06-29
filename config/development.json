@@ -1,6 +1,6 @@
 {
     "databaseConfig": {
-        "uri": "mongodb://mongodb:27017/",
+        "uri": "mongodb://192.168.43.173:27017/",
         "databases": {
             "factly": "Factly"
         }
@@ -16,7 +16,7 @@
             "baseUri":"http://api.factly.in/api/v1/",
             "posts":"posts/",
             "factchecks":"factchecks/",
-            "client":"factly-telugu"
+            "client":"Factly"
         }
     },
     "middleware": {

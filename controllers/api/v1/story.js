@@ -5,8 +5,8 @@ const utils = require('../../../lib/utils');
 
 function saveStory(req,res,next){
     const logger = req.logger;
-    const model = new StoryModel();
-    console.log("controller passing")
+    utils.setLogTokens(logger, 'story', 'saveStory', req.query.client, null);
+    const model = new StoryModel(logger);
     return model.saveStory(
         req.app.kraken,
         req.body.accessToken,
@@ -24,8 +24,8 @@ function saveStory(req,res,next){
 }
 function unsaveStory(req,res,next){
     const logger = req.logger;
-    const model = new StoryModel();
-    console.log("controller passing")
+    utils.setLogTokens(logger, 'story', 'unsaveStory', req.query.client, null);
+    const model = new StoryModel(logger);
     return model.unsaveStory(
         req.app.kraken,
         req.body.accessToken,

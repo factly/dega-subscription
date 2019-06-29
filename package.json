@@ -10,6 +10,7 @@
         "all": "npm run build && npm run test"
     },
     "dependencies": {
+        "chance": "^1.0.18",
         "cors": "^2.8.5",
         "construx": "^1.0.0",
         "construx-copier": "^1.0.0",

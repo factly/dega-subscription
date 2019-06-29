@@ -1,10 +1,12 @@
 'use strict';
-
 var UserModel = require('../../../models/user');
 var http = require('https');
+const utils = require('../../../lib/utils');
+
 function modifyUserInfo(req, res, next) {
   const logger = req.logger;
-  const model = new UserModel();
+  utils.setLogTokens(logger, 'users', 'modifyUserInfo', req.query.client, null);
+  const model = new UserModel(logger);
   return model.modifyUserInfo(
     req.app.kraken,
     req.body.accessToken,
@@ -20,7 +22,8 @@ function modifyUserInfo(req, res, next) {
 }
 function getUserInfo(req, res, next) {
   const logger = req.logger;
-  const model = new UserModel();
+  const model = new UserModel(logger);
+  utils.setLogTokens(logger, 'users', 'getUserInfo', req.query.client, null);
   req.headers.host = req.app.kraken.get('env:keycloak:uri')
   var options = {
     // host to forward to

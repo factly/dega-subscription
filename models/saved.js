@@ -10,17 +10,17 @@ class SavedModel extends MongoBase {
      * @param errorCode The errorCode to use when generating errors.
      */
     constructor(logger) {
-        super(logger, 'post');
+        super(logger, 'users');
         this.logger = logger;
     }
     getSavedPosts(config, accessToken, user) {
         const database = config.get('databaseConfig:databases:factly');
-        console.log("database", database);
+        this.logger.info("Getting saved posts' id");
         return Q(this.collection(database, "users").find({ _id: user.sub }).toArray()
             .then((result) => {
-                console.log("result",result)
+              this.logger.info("Retrieved saved posts' id");
+              this.logger.info("Getting saved posts");
                 if(result.length>0 && result[0].post && result[0].post.length){
-                    console.log("getLiked",result[0].post);
                     return Q(axios({
                       method:'get',
                       url:config.get('env:dega-api:baseUri')+config.get('env:dega-api:posts'),
@@ -31,15 +31,16 @@ class SavedModel extends MongoBase {
                         "sortAsc":"false"
                       }
                     })).then((response)=>{
-                      console.log("detailed",response.data)
+                      this.logger.info("Retreived saved posts");
                       return response.data;
                     })
                     .catch((error)=>{
-                      console.log(error);
+                      this.logger.error(error.data);
                       return error.data;
                     })
                   }
                   else{
+                    this.logger.info("No posts saved");
                     return {};
                   }
             })
@@ -47,12 +48,12 @@ class SavedModel extends MongoBase {
     }
     getSavedFactchecks(config, accessToken, user) {
         const database = config.get('databaseConfig:databases:factly');
-        console.log("database", database);
+        this.logger.info("Getting saved factchecks' id");
         return Q(this.collection(database, "users").find({ _id: user.sub }).toArray()
             .then((result) => {
-                console.log("result",result)
+              this.logger.info("Retrieved saved factchecks' id");
+              this.logger.info("Getting saved factchecks");
                 if(result.length>0 && result[0].factcheck && result[0].factcheck.length){
-                    console.log("getLiked",result[0].factcheck);
                     return Q(axios({
                       method:'get',
                       url:config.get('env:dega-api:baseUri')+config.get('env:dega-api:factchecks'),
@@ -63,15 +64,16 @@ class SavedModel extends MongoBase {
                         "sortAsc":"false"
                       }
                     })).then((response)=>{
-                      console.log("detailed",response.data)
+                      this.logger.info("Retreived saved factchecks");
                       return response.data;
                     })
                     .catch((error)=>{
-                      console.log(error);
+                      this.logger.error(error.data);
                       return error.data;
                     })
                   }
                   else{
+                    this.logger.info("No factchecks saved");
                     return {};
                   }
             })

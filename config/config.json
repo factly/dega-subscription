@@ -15,9 +15,23 @@
     },
 
     "middleware": {
-
-        
-
+        "logger": {
+            "enabled": true,
+            "route": "/api*",
+            "priority": 20,
+            "module": {
+                "name": "path:middleware/logHandler",
+                "arguments": [
+                    {
+                        "writeToDisk": true,
+                        "component": "dega_subscription",
+                        "logDir": "/tmp/dega",
+                        "writeToConsole": true,
+                        "level": "info"
+                    }
+                ]
+            }
+        },
         "static": {
             "module": {
                 "arguments": [ "path:./.build" ]

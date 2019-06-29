@@ -9,17 +9,16 @@ class StoryModel extends MongoBase {
      * @param errorCode The errorCode to use when generating errors.
      */
     constructor(logger) {
-        super(logger, 'post');
+        super(logger, 'users');
         this.logger = logger;
     }
     saveStory(config, accessToken, user, id, type) {
         const database = config.get('databaseConfig:databases:factly');
-        console.log("database", database);
+        this.logger.info("Saving Story");
         return Q(this.collection(database, "users").find({ _id: user.sub }).toArray()
             .then((result) => {
                 let userPrefs;
                 let toModify = true;
-                console.log("id", id, "userid", user.sub, "result", result);
                 if (result.length > 0) {
                     userPrefs = result[0];
                     if (userPrefs[type]) {
@@ -36,26 +35,25 @@ class StoryModel extends MongoBase {
                 else {
                     userPrefs = { "_id": user.sub, [type]: [id] }
                 }
-                console.log("modify", toModify);
                 if (toModify) {
-                    console.log("to modify", userPrefs);
                     this.collection(database, "users").updateOne({ _id: user.sub }, { $set: { [type]: userPrefs[type] } }, { upsert: true }, (err, result) => {
                         if (err) throw err;
+                        this.logger.info("Story Saved");
                         return { "success": true }
                     });
                 }
+                this.logger.info("Story already saved");
                 return { "success": true }
             })
         )
     }
     unsaveStory(config, accessToken, user, id, type) {
         const database = config.get('databaseConfig:databases:factly');
-        console.log("database", database);
+        this.logger.info("unmark story from saved");
         return Q(this.collection(database, "users").find({ _id: user.sub }).toArray()
             .then((result) => {
                 let userPrefs;
                 let toModify = true;
-                console.log("id", id, "userid", user.sub, "result", result);
                 if (result.length > 0 && result[0][type].includes(id)) {
                     userPrefs = result[0];
                     console.log(userPrefs);
@@ -65,14 +63,15 @@ class StoryModel extends MongoBase {
                 else {
                     toModify = false;
                 }
-                console.log("modify", toModify);
                 if (toModify) {
                     console.log("to modify", userPrefs);
                     this.collection(database, "users").updateOne({ _id: user.sub }, { $set: { [type]: userPrefs[type] } }, { upsert: true }, (err, result) => {
                         if (err) throw err;
+                        this.logger.info("Story umarked from saved");
                         return { "success": true }
                     });
                 }
+                this.logger.info("Story already unsaved");
                 return { "success": true }
             })
         )
