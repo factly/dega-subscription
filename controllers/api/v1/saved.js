@@ -2,7 +2,7 @@
 
 const SavedModel = require('../../../models/saved');
 const utils = require('../../../lib/utils');
-
+const getMiddleware = require('../../../middleware/validation');
 function getSavedPosts(req,res,next){
     const logger = req.logger;
     utils.setLogTokens(logger, 'saved', 'getSavedPosts', req.query.client, null);
@@ -13,7 +13,7 @@ function getSavedPosts(req,res,next){
         req.body.user,
     ) .then((result) => {
         if (result) {
-            res.status(200).json(result);
+            res.status(201).send(result);
             return
         }
     })
@@ -30,7 +30,7 @@ function getSavedFactchecks(req,res,next){
         req.body.user,
     ) .then((result) => {
         if (result) {
-            res.status(200).json(result);
+            res.status(200).send(result);
             return
         }
     })
@@ -39,6 +39,6 @@ function getSavedFactchecks(req,res,next){
 }
 
 module.exports = function (router) {
-    router.post('/posts',getSavedPosts);
-    router.post('/factchecks',getSavedFactchecks)
+    router.post('/posts', getSavedPosts);
+    router.post('/factchecks', getSavedFactchecks)
 };

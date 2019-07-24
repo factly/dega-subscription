@@ -15,7 +15,7 @@ function saveStory(req,res,next){
         req.body.type
     ) .then((result) => {
         if (result) {
-            res.status(200).json(result);
+            res.status(201).send(result);
             return
         }
     })
@@ -34,8 +34,8 @@ function unsaveStory(req,res,next){
         req.body.type
     ) .then((result) => {
         if (result) {
-            res.status(200).json(result);
-            return
+            res.status(200).send(result);
+            
         }
     })
     .catch(next);

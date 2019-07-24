@@ -23,7 +23,7 @@
                 "name": "path:middleware/logHandler",
                 "arguments": [
                     {
-                        "writeToDisk": true,
+                        "writeToDisk": false,
                         "component": "dega_subscription",
                         "logDir": "/tmp/dega",
                         "writeToConsole": true,

@@ -14,7 +14,7 @@ function modifyUserInfo(req, res, next) {
   ).then((result) => {
     console.log("result",result);
     if (result) {
-      res.status(200).json(result);
+      res.status(200).send(result);
       return
     }
   })
